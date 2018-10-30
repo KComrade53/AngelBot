@@ -1,2 +1,0 @@
-userName = "placeholder"
-password = "placeholder"

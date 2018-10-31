@@ -1,7 +1,8 @@
 import time
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
+from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, WebDriverException
 import winsound
+
 from secrets import *
 
 frequency = 2500  # Set Frequency To 2500 Hertz
@@ -25,7 +26,7 @@ time.sleep(2)
 
 while not found:
     try:
-        driver.find_element_by_xpath('//button[text()="Join"]').click()   # only available when quiz is open
+        driver.find_element_by_xpath('//button[text()="Join"]').click()  # only available when quiz is open
         found = True
 
         winsound.Beep(frequency, duration)
@@ -35,6 +36,10 @@ while not found:
     except NoSuchElementException:
         print("Failed to find, trying again\n")
         time.sleep(20)
+    except WebDriverException:  # catches rest of errors
+        print("Chrome closed")
+        driver.quit()
+        break   # exit while loop
 
 # print(pew)
 # driver.find_element_by_id('course-history-icon').click()  # for testing on course page
